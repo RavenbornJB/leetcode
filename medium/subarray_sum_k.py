@@ -1,14 +1,18 @@
 class Solution:
-    def subarraySum(self, nums: list[int], k: int) -> int:  # to do
-        count = 0
-        d = {}
-        for start in range(len(nums)):
-            s = 0
-            for end in range(start, len(nums)):
-                s += nums[end]
-                d[s] = d.get(s, 0) + 1
-        print(d)
-        return count
+    def subarraySum(self, nums: list[int], k: int) -> int:
+        res = 0  # 0
+        cumsum = 0
+        remaining = {}  # {7: 2, 8: 2, 10:1}
+        for num in nums:  # [3, 4, 3, 4, 6, 8], num = 8
+            cumsum += num
+            if cumsum == k: # 8 != 4
+                res += 1
+            if cumsum in remaining: # True
+                res += remaining[cumsum] # +2
+
+            remaining[k + cumsum] = remaining.get(k + cumsum, 0) + 1 # 6 + 4 = 10: 1
+
+        return res # 4
 
 
 if __name__ == '__main__':
